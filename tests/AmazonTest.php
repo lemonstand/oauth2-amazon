@@ -53,4 +53,11 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
         $url = $provider->urlUserDetails($accessTokenDummy);
         $this->assertEquals('https://api.sandbox.amazon.com/user/profile', $url);
     }
+
+    private function getAccessToken()
+    {
+        return $this->getMockBuilder('League\OAuth2\Client\Token\AccessToken')
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
 }
