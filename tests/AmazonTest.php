@@ -41,14 +41,16 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
     public function testGetUrlUserDetails()
     {
         $provider = new OauthProvider($this->config);
-        $url = $provider->urlUserDetails();
+        $accessTokenDummy = $this->getAccessToken();
+        $url = $provider->urlUserDetails($accessTokenDummy);
         $this->assertEquals('https://api.amazon.com/user/profile', $url);
     }
 
     public function testGetUrlUserDetailsSandbox()
     {
         $provider = new OauthProvider($this->sandboxConfig);
-        $url = $provider->urlUserDetails();
+        $accessTokenDummy = $this->getAccessToken();
+        $url = $provider->urlUserDetails($accessTokenDummy);
         $this->assertEquals('https://api.sandbox.amazon.com/user/profile', $url);
     }
 }
