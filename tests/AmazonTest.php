@@ -41,16 +41,16 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
     public function testGetUrlUserDetails()
     {
         $provider = new OauthProvider($this->config);
-        $accessTokenDummy = $this->getAccessToken();
-        $url = $provider->urlUserDetails($accessTokenDummy);
+        $token = $this->getAccessToken();
+        $url = $provider->urlUserDetails($token);
         $this->assertEquals('https://api.amazon.com/user/profile', $url);
     }
 
     public function testGetUrlUserDetailsSandbox()
     {
         $provider = new OauthProvider($this->sandboxConfig);
-        $accessTokenDummy = $this->getAccessToken();
-        $url = $provider->urlUserDetails($accessTokenDummy);
+        $token = $this->getAccessToken();
+        $url = $provider->urlUserDetails($token);
         $this->assertEquals('https://api.sandbox.amazon.com/user/profile', $url);
     }
 
@@ -68,8 +68,8 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
     {
         $response = (object) $responseData;
         $provider = new OauthProvider($this->config);
-        $accessTokenDummy = $this->getAccessToken();
-        $userDetails = $provider->userDetails($response, $accessTokenDummy);
+        $token = $this->getAccessToken();
+        $userDetails = $provider->userDetails($response, $token);
         $this->assertInstanceOf('League\OAuth2\Client\Entity\User', $userDetails);
         $this->assertObjectHasAttribute('uid', $userDetails);
         $this->assertObjectHasAttribute('name', $userDetails);
@@ -86,7 +86,7 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
     {
         $response = (object) $responseData;
         $provider = new OauthProvider($this->config);
-        $accessTokenDummy = $this->getAccessToken();
+        $token = $this->getAccessToken();
         $email = $provider->userEmail($response, $token);
         $this->assertSame($expectedUserData['email'], $email);
     }
@@ -98,7 +98,7 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
     {
         $response = (object) $responseData;
         $provider = new OauthProvider($this->config);
-        $accessTokenDummy = $this->getAccessToken();
+        $token = $this->getAccessToken();
         $uid = $provider->userUid($response, $token);
         $this->assertSame($expectedUserData['uid'], $uid);
     }
@@ -110,7 +110,7 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
     {
         $response = (object) $responseData;
         $provider = new OauthProvider($this->config);
-        $accessTokenDummy = $this->getAccessToken();
+        $token = $this->getAccessToken();
         $name = $provider->userScreenName($response, $token);
         $this->assertSame($expectedUserData['name'], $name);
     }
