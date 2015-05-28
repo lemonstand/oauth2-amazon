@@ -8,14 +8,7 @@ class Amazon extends AbstractProvider
 {
     public $scopeSeparator = ' ';
     public $testMode = false;
-
-    public $scopes = [
-        'profile',
-        'payments:widget',
-        'payments:shipping_address',
-    ];
-
-    public $authorizationHeader = 'OAuth';
+    public $scopes = ['profile','payments:widget','payments:shipping_address'];
 
     public function __construct($options = [])
     {
@@ -24,16 +17,6 @@ class Amazon extends AbstractProvider
         if (isset($options['testMode'])) {
             $this->testMode = $options['testMode'];
         }
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
     }
 
     public function urlAuthorize()
@@ -48,27 +31,26 @@ class Amazon extends AbstractProvider
 
     public function urlUserDetails(\League\OAuth2\Client\Token\AccessToken $token)
     {
-        return ($this->testMode) ? 'https://api.sandbox.amazon.com/user/profile' : 'https://api.amazon.com/user/profile';
+        $url = ($this->testMode) ? 'https://api.sandbox.amazon.com/user/profile' : 'https://api.amazon.com/user/profile';
+        return $url . '?access_token=' . $token;
     }
 
     public function userDetails($response, \League\OAuth2\Client\Token\AccessToken $token)
     {
-        return parent::userDetails($response, $token);
+        $user = new User();
+
+        $user->exchangeArray([
+            'uid'   => isset($response->user_id) ? $response->user_id : null,
+            'name'  => isset($response->name) ? $response->name : null,
+            'email' => isset($response->email) ? $response->email : null
+        ]);
+
+        return $user;
     }
 
     public function userUid($response, \League\OAuth2\Client\Token\AccessToken $token)
     {
-        return parent::userUid($response, $token);
-    }
-
-    public function userEmail($response, \League\OAuth2\Client\Token\AccessToken $token)
-    {
-        return parent::userEmail($response, $token);
-    }
-
-    public function userScreenName($response, \League\OAuth2\Client\Token\AccessToken $token)
-    {
-        return parent::userScreenName($response, $token);
+        return isset($response->user_id) ? $response->user_id : null;
     }
 
     public function getAuthorizationUrl($options = [])

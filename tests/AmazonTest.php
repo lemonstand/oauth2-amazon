@@ -60,4 +60,76 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
     }
+
+    /**
+     * @dataProvider getUserDetailsDataProvider
+     */
+    public function testGetUserDetails($responseData, $expectedUserData)
+    {
+        $response = (object) $responseData;
+        $provider = new OauthProvider($this->config);
+        $accessTokenDummy = $this->getAccessToken();
+        $userDetails = $provider->userDetails($response, $accessTokenDummy);
+        $this->assertInstanceOf('League\OAuth2\Client\Entity\User', $userDetails);
+        $this->assertObjectHasAttribute('uid', $userDetails);
+        $this->assertObjectHasAttribute('name', $userDetails);
+        $this->assertObjectHasAttribute('email', $userDetails);
+        $this->assertSame($expectedUserData['uid'], $userDetails->uid);
+        $this->assertSame($expectedUserData['name'], $userDetails->name);
+        $this->assertSame($expectedUserData['email'], $userDetails->email);
+    }
+
+    /**
+     * @dataProvider getUserDetailsDataProvider
+     */
+    public function testGetUserEmail($responseData, $expectedUserData)
+    {
+        $response = (object) $responseData;
+        $provider = new OauthProvider($this->config);
+        $accessTokenDummy = $this->getAccessToken();
+        $email = $provider->userEmail($response, $token);
+        $this->assertSame($expectedUserData['email'], $email);
+    }
+
+    /**
+     * @dataProvider getUserDetailsDataProvider
+     */
+    public function testGetUserUid($responseData, $expectedUserData)
+    {
+        $response = (object) $responseData;
+        $provider = new OauthProvider($this->config);
+        $accessTokenDummy = $this->getAccessToken();
+        $uid = $provider->userUid($response, $token);
+        $this->assertSame($expectedUserData['uid'], $uid);
+    }
+
+    /**
+     * @dataProvider getUserDetailsDataProvider
+     */
+    public function testGetUserScreenName($responseData, $expectedUserData)
+    {
+        $response = (object) $responseData;
+        $provider = new OauthProvider($this->config);
+        $accessTokenDummy = $this->getAccessToken();
+        $name = $provider->userScreenName($response, $token);
+        $this->assertSame($expectedUserData['name'], $name);
+    }
+
+    public function getUserDetailsDataProvider()
+    {
+        return [
+            [
+                [
+                    'user_id'  => 123,
+                    'name'     => 'test_man',
+                    'email'    => 'test_man@hotmail.com',
+                ],
+                [
+                    'uid'      => 123,
+                    'name'     => 'test_man',
+                    'email'    => 'test_man@hotmail.com',
+                ],
+            ],
+        ];
+    }
 }
