@@ -43,7 +43,7 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
         $provider = new OauthProvider($this->config);
         $token = $this->getAccessToken();
         $url = $provider->urlUserDetails($token);
-        $this->assertEquals('https://api.amazon.com/user/profile', $url);
+        $this->assertEquals('https://api.amazon.com/user/profile?access_token=', $url);
     }
 
     public function testGetUrlUserDetailsSandbox()
@@ -51,7 +51,7 @@ class AmazonTest extends \PHPUnit_Framework_TestCase
         $provider = new OauthProvider($this->sandboxConfig);
         $token = $this->getAccessToken();
         $url = $provider->urlUserDetails($token);
-        $this->assertEquals('https://api.sandbox.amazon.com/user/profile', $url);
+        $this->assertEquals('https://api.sandbox.amazon.com/user/profile?access_token=', $url);
     }
 
     private function getAccessToken()
