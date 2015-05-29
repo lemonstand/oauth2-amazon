@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/travis/lemonstand/oauth2-amazon.svg)](https://travis-ci.org/lemonstand/oauth2-amazon)
 [![License](https://img.shields.io/packagist/l/lemonstand/oauth2-amazon.svg)](https://github.com/lemonstand/oauth2-amazon/blob/master/LICENSE)
-[![Total Downloads](https://poser.pugx.org/lemonstand/oauth2-amazon/downloads.svg)](https://packagist.org/packages/lemonstand/oauth2-amazon)
+[![Total Downloads](https://poser.pugx.org/lemonstand/oauth2-amazon/downloads)](https://packagist.org/packages/lemonstand/oauth2-amazon)
 
 This package provides Amazon OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
@@ -45,6 +45,12 @@ if (isset($_GET['code']) && $_GET['code']) {
 ### Refreshing A Token
 
 ```php
+$provider = new LemonStand\OAuth2\Client\Provider\Amazon([
+    'clientId' => 'YOUR_CLIENT_ID',
+    'clientSecret' => 'YOUR_CLIENT_SECRET',
+    'redirectUri' => 'http://your-redirect-uri',
+]);
+
 $grant = new \League\OAuth2\Client\Grant\RefreshToken();
 $token = $provider->getAccessToken($grant, ['refresh_token' => $refreshToken]);
 ```
