@@ -55,20 +55,12 @@ class Amazon extends AbstractProvider
 
     public function getAuthorizationUrl($options = [])
     {
-        $this->state = isset($options['state']) ? $options['state'] : md5(uniqid(rand(), true));
-
-        $params = [
-            'client_id'     => $this->clientId,
-            'redirect_uri'  => $this->redirectUri,
-            'state'         => $this->state,
-            'scope'         => is_array($this->scopes) ? implode($this->scopeSeparator, $this->scopes) : $this->scopes,
-            'response_type' => isset($options['response_type']) ? $options['response_type'] : 'code',
-        ];
+        $url = parent::getAuthorizationUrl($options);
 
         if ($this->testMode) {
-            $params['sandbox'] = 'true';
+            $url .= '&sandbox=true';
         }
 
-        return $this->urlAuthorize().'?'.$this->httpBuildQuery($params, '', '&');
+        return $url;
     }
 }
