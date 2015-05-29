@@ -18,6 +18,8 @@ composer require lemonstand/oauth2-amazon
 
 Usage is the same as The League's OAuth client, using `LemonStand\OAuth2\Client\Provider\Amazon` as the provider.
 
+### Authorization Code Flow
+
 ```php
 $provider = new LemonStand\OAuth2\Client\Provider\Amazon([
     'clientId' => 'YOUR_CLIENT_ID',
@@ -34,9 +36,15 @@ if (isset($_GET['code']) && $_GET['code']) {
 
     // Returns an instance of League\OAuth2\Client\User
     $user = $this->provider->getUserDetails($token);
-    
     $uid = $provider->getUserUid($token);
     $email = $provider->getUserEmail($token);
     $screenName = $provider->getUserScreenName($token);
 }
+```
+
+### Refreshing A Token
+
+```php
+$grant = new \League\OAuth2\Client\Grant\RefreshToken();
+$token = $provider->getAccessToken($grant, ['refresh_token' => $refreshToken]);
 ```
