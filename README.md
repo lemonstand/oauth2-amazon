@@ -20,15 +20,15 @@ Usage is the same as The League's OAuth client, using `LemonStand\OAuth2\Client\
 
 ```php
 $provider = new LemonStand\OAuth2\Client\Provider\Amazon([
-    'clientId' => "YOUR_CLIENT_ID",
-    'clientSecret' => "YOUR_CLIENT_SECRET",
-    'redirectUri' => "http://your-redirect-uri",
+    'clientId' => 'YOUR_CLIENT_ID',
+    'clientSecret' => 'YOUR_CLIENT_SECRET',
+    'redirectUri' => 'http://your-redirect-uri',
 ]);
 
 $provider->testMode = true; // Allows you to work in Amazon's Sandbox environment.
 
 if (isset($_GET['code']) && $_GET['code']) {
-    $token = $this->provider->getAccessToken("authorizaton_code", [
+    $token = $this->provider->getAccessToken('authorizaton_code', [
         'code' => $_GET['code']
     ]);
 
