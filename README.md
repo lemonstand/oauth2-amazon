@@ -1,6 +1,7 @@
 # Amazon Provider for OAuth 2.0 Client
 
 [![Build Status](https://img.shields.io/travis/lemonstand/oauth2-amazon.svg)](https://travis-ci.org/lemonstand/oauth2-amazon)
+[![Coverage Status](https://coveralls.io/repos/lemonstand/oauth2-amazon/badge.svg?branch=master)](https://coveralls.io/r/lemonstand/oauth2-amazon?branch=master)
 [![License](https://img.shields.io/packagist/l/lemonstand/oauth2-amazon.svg)](https://github.com/lemonstand/oauth2-amazon/blob/master/LICENSE)
 [![Total Downloads](https://poser.pugx.org/lemonstand/oauth2-amazon/downloads)](https://packagist.org/packages/lemonstand/oauth2-amazon)
 
