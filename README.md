@@ -31,7 +31,7 @@ $provider = new LemonStand\OAuth2\Client\Provider\Amazon([
 $provider->testMode = true; // Allows you to work in Amazon's Sandbox environment.
 
 if (isset($_GET['code']) && $_GET['code']) {
-    $token = $this->provider->getAccessToken('authorizaton_code', [
+    $token = $this->provider->getAccessToken('authorization_code', [
         'code' => $_GET['code']
     ]);
 
